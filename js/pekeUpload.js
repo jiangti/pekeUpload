@@ -35,6 +35,7 @@
             limitError: "You have reached the limit of files that you can upload",
             delfiletext: "Remove from queue",
             onFileError: function(file, error) {},
+            beforeSend: function() {},
             onFileSuccess: function(file, data) {}
         };
         var options = $.extend(defaults, options);
@@ -293,6 +294,9 @@
                     type: "POST",
                     data: formData,
                     dataType: "json",
+                    beforeSend: function(jqXHR, settings) {
+                        options.beforeSend(jqXHR, settings);
+                    },
                     success: function(data) {
                         if (data == 1 || data.success == 1) {
                             pekeUpload.files[pos] = null;
